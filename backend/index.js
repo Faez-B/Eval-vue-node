@@ -30,32 +30,32 @@ let _id = 1;
     })
 
 
-    // Object
-    const objectSchema = new mongoose.Schema({
+    // Todo
+    const todoSchema = new mongoose.Schema({
         _id : Number,
         name : String,
         userId : Number
     });
 
-    const joiObjectSchema = Joi.object({
+    const joiTodoSchema = Joi.object({
         name : Joi.string().min(2).max(255).required(),
         userId : Joi.number().required()
     });
 
 // Tables
 const User = mongoose.model('User', userSchema);
-const Object = mongoose.model('Object', objectSchema);
+const Todo = mongoose.model('Todo', todoSchema);
 
 // Connexion à MongoDB
 mongoose.connect("mongodb://localhost:27017/Eval")
 .then( async function () {
     console.log("Connecté à la BDD");
 
-    let object = await Object.findById(_id);
+    let object = await Todo.findById(_id);
 
     while ( ! (object == null)) {
         _id = _id + 1;
-        object = await Object.findById(_id);
+        object = await Todo.findById(_id);
     }
 })
 .catch( () => {
@@ -174,22 +174,22 @@ app.get('/signout', (req, res) => {
 })
 
 
-// Logique Object
+// Logique Todo
 app.get("/getAll", async (req, res) => {
-    const objects = await Object.find();
+    const todos = await Todo.find();
 
-    res.status(200).send(objects);
+    res.status(200).send(todos);
 })
 
 app.get("/getOne/:id", async (req, res) => {
     const payload = req.params;
 
-    const object = await Object.findById(payload.id).exec()
+    const todo = await Todo.findById(payload.id).exec()
         .then( (data) => {
             res.status(200).send(data);
         })
         .catch( (err) => {
-            res.status(404).send("Object non trouvé");
+            res.status(404).send("Todo non trouvé");
         })
     ;
 })
@@ -197,7 +197,7 @@ app.get("/getOne/:id", async (req, res) => {
 app.post("/addOne", async (req, res) => {
     const payload = req.body;
     
-    const {error} = joiObjectSchema.validate(payload);
+    const {error} = joiTodoSchema.validate(payload);
 
     if (error) {
         res.status(400).send({ erreur : error.details[0].message });
@@ -205,8 +205,8 @@ app.post("/addOne", async (req, res) => {
 
     else{
         let id = _id++;
-        const object = new Object({...payload, _id : id, userId: payload.userId});
-        await object.save();
+        const todo = new Todo({...payload, _id : id, userId: payload.userId});
+        await todo.save();
         res.status(201).send({payload, id : _id});
     }
 })
@@ -214,29 +214,25 @@ app.post("/addOne", async (req, res) => {
 app.put("/updateOne", async (req, res) => {
     const payload = req.body;
 
-    const object = await Object.findByIdAndUpdate(payload.id, payload.name);
+    const todo = await Todo.findByIdAndUpdate(payload.id, payload.name);
 
-    object.name = payload.name;
+    todo.name = payload.name;
 
-    await object.save();
+    await todo.save();
 
-    res.status(201).send("Object a été modifier")
+    res.status(201).send("Todo a été modifier")
 })
 
 app.delete("/deleteOne/:id", async (req, res) => {
     const payload = req.params;
 
-    // console.log(payload);
-
-    // res.send(payload, req.params);
-
-    Object.findByIdAndDelete({_id : parseInt(payload.id)}).exec()
+    Todo.findByIdAndDelete({_id : parseInt(payload.id)}).exec()
         .then( (data) => {
             // res.status(200).send(data);
-            res.send("Object supprimé");
+            res.send("Todo supprimé");
         })
         .catch( (err) => {
-            res.status(404).send("Object non trouvé");
+            res.status(404).send("Todo non trouvé");
         })
     ;
     

@@ -1,10 +1,27 @@
 <script setup>
     import {ref} from 'vue';
+    import {useUserStore} from "@/services/userStore";
+    import { useRouter } from "vue-router";
+
+    const router = useRouter();
 
     const name = ref("");
     const email = ref("");
     const mdp = ref("");
-    const rememberMe = ref(false);
+
+    const token = ref("");
+
+    const { connexion } = useUserStore();
+
+    function onSubmit() {
+        if (email.value && mdp.value) {
+            connexion({
+                email: email.value,
+                mdp: mdp.value
+            });
+            router.push("/");
+        }
+    }
 
 </script>
 
@@ -23,11 +40,6 @@
         <div class="form-group">
             <label for="email">Mot de passe</label>
             <input type="password" class="form-control" id="email" placeholder="Mot de passe" v-model="mdp">
-        </div>
-
-        <div class="form-group my-2">
-            <input type="checkbox" name="rememberMe" id="rememberMe" class="mx-1" v-model="rememberMe">
-            <label for="rememberMe">Se souvenir de moi</label>
         </div>
         
         <div class="mt-2">

@@ -1,5 +1,19 @@
 <script setup>
+  import {ref} from "vue";
 
+  import {useUserStore} from "@/services/userStore";
+
+  const token = ref("");
+
+  if (localStorage.getItem("token")) {
+    token.value = localStorage.getItem("token");
+  }
+
+  const { user, deconnexion } = useUserStore();
+
+  function logout() {
+    deconnexion();
+  }
 </script>
 
 <template>
@@ -17,12 +31,16 @@
       </div>
 
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item mx-2">
+        <li class="nav-item mx-2" v-if="!user">
           <RouterLink class="nav-link btn btn-success" :to="{name:'connexion'}">Connexion</RouterLink>
         </li>
 
-        <li class="nav-item mx-2">
+        <li class="nav-item mx-2" v-if="!user">
           <RouterLink class="nav-link btn btn-primary" :to="{name:'inscription'}">Inscription</RouterLink>
+        </li>
+
+        <li class="nav-item mx-2" v-if="user">
+          <RouterLink class="nav-link btn btn-danger" :to="{name:'accueil'}" @click="logout()">Déconnexion</RouterLink>
         </li>
       </ul>
     </nav>

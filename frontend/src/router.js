@@ -5,6 +5,7 @@ import RegisterComponent from "@/components/Register.vue";
 import A_Propos from "@/components/A_Propos.vue";
 import Todolist from "@/components/Liste.vue";
 import Au_Hasard from "@/components/Au_Hasard.vue";
+import DetailsTodoVue from "@/components/DetailsTodo.vue";
 
 
 import {useUserStore} from "@/services/userStore";
@@ -26,13 +27,19 @@ const router = createRouter({
         {
             path: "/connexion",
             name: "connexion",
-            component: LoginVue
+            component: LoginVue,
+            beforeEnter: (to, from) => {
+                if (user.value) return { name: "accueil" }
+            }
         },
 
         {
             path: "/inscription",
             name: "inscription",
-            component: RegisterComponent
+            component: RegisterComponent,
+            beforeEnter: (to, from) => {
+                if (user.value) return { name: "accueil" }
+            }
         },
 
         {
@@ -44,13 +51,22 @@ const router = createRouter({
         {
             path: "/todolist",
             name: "todolist",
-            component: Todolist
+            component: Todolist,
+            beforeEnter: (to, from) => {
+                if (!user.value) return { name: "connexion" }
+            }
         },
 
         {
             path: "/au-hasard",
             name: "auHasard",
             component: Au_Hasard
+        },
+
+        {
+            path: "/detailTodo/:id",
+            name: "detailTodo",
+            component: DetailsTodoVue
         }
     ]
 })

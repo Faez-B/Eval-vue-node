@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt  = require('jsonwebtoken');
-const cors = require('cors')
+const cors = require('cors');
+const { resolve } = require("path");
 
 const app = express();
 
@@ -175,10 +176,22 @@ app.get('/signout', (req, res) => {
 
 
 // Logique Todo
-app.get("/getAll", async (req, res) => {
-    const todos = await Todo.find();
+app.get("/getAll/:userId", async (req, res) => {
+    const payload = req.params;
+    
+    const todosUser = [];
 
-    res.status(200).send(todos);
+    const todos = await Todo.find().exec()
+        .then( (data) => {
+            data.forEach(element => {
+                if (element.userId == payload.userId) {
+                    todosUser.push(element);
+                }
+            });
+        })
+    ;
+
+    res.status(200).send(todosUser);
 })
 
 app.get("/getOne/:id", async (req, res) => {
@@ -205,7 +218,11 @@ app.post("/addOne", async (req, res) => {
 
     else{
         let id = _id++;
-        const todo = new Todo({...payload, _id : id, userId: payload.userId});
+        const todo = new Todo({
+            ...payload, 
+            _id : id, 
+            userId: parseInt(payload.userId)
+        });
         await todo.save();
         res.status(201).send({payload, id : _id});
     }
@@ -236,6 +253,28 @@ app.delete("/deleteOne/:id", async (req, res) => {
         })
     ;
     
+})
+
+app.get("/random", async (req, res) => {
+    let random = null;
+    if ( !token ) {
+        // random = Math.floor(Math.random());
+
+        // const todo = await Todo.findById(payload.id).exec()
+        //     .then( (data) => {
+        //         res.status(200).send(data);
+        //     })
+        //     .catch( (err) => {
+        //         res.status(404).send("Todo non trouvé");
+        //     })
+        // ;
+    }
+
+    else{
+        // res.status(200).send("OK");
+    }
+
+    res.send("default");
 })
 
 if (process.env.NODE_ENV !== 'test') 

@@ -33,13 +33,13 @@ let _id = 1;
     // Todo
     const todoSchema = new mongoose.Schema({
         _id : Number,
-        name : String,
-        userId : Number
+        name : String
+        // userId : Number
     });
 
     const joiTodoSchema = Joi.object({
-        name : Joi.string().min(2).max(255).required(),
-        userId : Joi.number().required()
+        name : Joi.string().min(2).max(255).required()
+        // userId : Joi.number().required()
     });
 
 // Tables
@@ -205,7 +205,11 @@ app.post("/addOne", async (req, res) => {
 
     else{
         let id = _id++;
-        const todo = new Todo({...payload, _id : id, userId: payload.userId});
+        const todo = new Todo({
+            ...payload, 
+            _id : id
+            // userId: payload.userId
+        });
         await todo.save();
         res.status(201).send({payload, id : _id});
     }

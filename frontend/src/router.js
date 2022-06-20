@@ -26,13 +26,19 @@ const router = createRouter({
         {
             path: "/connexion",
             name: "connexion",
-            component: LoginVue
+            component: LoginVue,
+            beforeEnter: (to, from) => {
+                if (user.value) return { name: "accueil" }
+            }
         },
 
         {
             path: "/inscription",
             name: "inscription",
-            component: RegisterComponent
+            component: RegisterComponent,
+            beforeEnter: (to, from) => {
+                if (user.value) return { name: "accueil" }
+            }
         },
 
         {
@@ -44,7 +50,10 @@ const router = createRouter({
         {
             path: "/todolist",
             name: "todolist",
-            component: Todolist
+            component: Todolist,
+            beforeEnter: (to, from) => {
+                if (!user.value) return { name: "connexion" }
+            }
         },
 
         {

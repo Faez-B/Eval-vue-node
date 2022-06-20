@@ -1,9 +1,9 @@
 <script setup>
     import {ref} from 'vue';
-
-    // import axios from 'axios';
-
     import {useUserStore} from "@/services/userStore";
+    import { useRouter } from "vue-router";
+
+    const router = useRouter();
 
     const name = ref("");
     const email = ref("");
@@ -19,6 +19,7 @@
                 email: email.value,
                 mdp: mdp.value
             });
+            router.push("/");
         }
     }
 

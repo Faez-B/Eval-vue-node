@@ -9,7 +9,7 @@
     token.value = localStorage.getItem("token");
   }
 
-  const { deconnexion } = useUserStore();
+  const { user, deconnexion } = useUserStore();
 
   function logout() {
     deconnexion();
@@ -31,15 +31,15 @@
       </div>
 
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item mx-2" v-if="!token">
+        <li class="nav-item mx-2" v-if="!user">
           <RouterLink class="nav-link btn btn-success" :to="{name:'connexion'}">Connexion</RouterLink>
         </li>
 
-        <li class="nav-item mx-2" v-if="!token">
+        <li class="nav-item mx-2" v-if="!user">
           <RouterLink class="nav-link btn btn-primary" :to="{name:'inscription'}">Inscription</RouterLink>
         </li>
 
-        <li class="nav-item mx-2" v-if="token">
+        <li class="nav-item mx-2" v-if="user">
           <RouterLink class="nav-link btn btn-danger" :to="{name:'accueil'}" @click="logout()">Déconnexion</RouterLink>
         </li>
       </ul>

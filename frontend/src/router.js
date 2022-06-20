@@ -5,6 +5,7 @@ import RegisterComponent from "@/components/Register.vue";
 import A_Propos from "@/components/A_Propos.vue";
 import Todolist from "@/components/Liste.vue";
 import Au_Hasard from "@/components/Au_Hasard.vue";
+import DetailsTodoVue from "@/components/DetailsTodo.vue";
 
 
 import {useUserStore} from "@/services/userStore";
@@ -65,7 +66,7 @@ const router = createRouter({
         {
             path: "/detailTodo/:id",
             name: "detailTodo",
-            component: Au_Hasard
+            component: DetailsTodoVue
         }
     ]
 })

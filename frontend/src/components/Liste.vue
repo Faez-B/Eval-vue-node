@@ -86,7 +86,7 @@
                 Supprimer
             </button>
 
-            <RouterLink to="#">
+            <RouterLink :to="{name:'detailTodo', params : {id : object._id}}">
                 {{ object.name }}
             </RouterLink>
         </li>

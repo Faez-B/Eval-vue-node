@@ -1,7 +1,7 @@
 <script setup>
     import {ref} from "vue";
     import axios from 'axios';
-    import * as jose from 'jose'
+    import * as jose from 'jose';
 
     const userId = ref("");
     
@@ -11,6 +11,10 @@
 
     let objects = ref(null);
     let nom = ref("");
+
+    if (localStorage.getItem("nom")) {
+        nom.value = localStorage.getItem("nom");
+    }
 
     axios.get(`http://localhost:8000/getAll/${userId.value}`)
         .then( (data) => {
@@ -45,6 +49,16 @@
         }
     }
 
+    function changeNom() {
+        if (nom.value) {
+            localStorage.setItem("nom", nom.value);
+        }
+
+        else {
+            localStorage.removeItem("nom");
+        }
+    }
+
     function onDelete(id) {
 
     }
@@ -56,7 +70,7 @@
     </h1>
 
     <form @submit.prevent="onSubmit()">
-        <input type="text" placeholder="Nom" v-model="nom">
+        <input type="text" placeholder="Nom" v-model="nom" @change="changeNom()">
         <button class="btn btn-success mx-2">
             Ajouter
         </button>

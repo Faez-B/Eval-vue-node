@@ -42,7 +42,7 @@
         </li>
 
         <li class="nav-item mx-2" v-if="user">
-          <RouterLink class="nav-link btn btn-danger" :to="{name:'accueil'}" @click="logout()">Déconnexion</RouterLink>
+          <RouterLink class="nav-link btn btn-danger" :to="{name:'connexion'}" @click="logout()">Déconnexion</RouterLink>
         </li>
       </ul>
     </nav>

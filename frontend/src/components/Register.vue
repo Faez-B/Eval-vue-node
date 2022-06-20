@@ -21,7 +21,9 @@
 </script>
 
 <template>
-
+    <h1 class="text-center">
+        Formulaire d'inscription
+    </h1>
     <form @submit.prevent="onSubmit()">
         <div class="form-group">
             <label for="nom">Nom</label>

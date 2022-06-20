@@ -26,6 +26,10 @@
 </script>
 
 <template>
+    <h1 class="text-center">
+        Connexion
+    </h1>
+
     <form @submit.prevent="onSubmit()">
         <div class="form-group">
             <label for="nom">Nom</label>

@@ -6,13 +6,21 @@ import A_Propos from "@/components/A_Propos.vue";
 import Todolist from "@/components/Liste.vue";
 import Au_Hasard from "@/components/Au_Hasard.vue";
 
+
+import {useUserStore} from "@/services/userStore";
+
+const { user } = useUserStore();
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
             path: "/",
             name: "accueil",
-            component: AccueilComponent
+            component: AccueilComponent,
+            beforeEnter: (to, from) => {
+                if (!user.value) return { name: "connexion" }
+            }
         },
 
         {

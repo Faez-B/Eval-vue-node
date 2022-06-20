@@ -15,8 +15,12 @@
       </div>
 
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <li class="nav-item mx-2">
           <RouterLink class="nav-link btn btn-success" :to="{name:'connexion'}">Connexion</RouterLink>
+        </li>
+
+        <li class="nav-item mx-2">
+          <RouterLink class="nav-link btn btn-primary" :to="{name:'inscription'}">Inscription</RouterLink>
         </li>
       </ul>
     </nav>

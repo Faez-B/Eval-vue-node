@@ -1,6 +1,9 @@
-<script setup></script>
+<script setup>
+
+</script>
+
 <template>
     <h1 class="text-center">
-        Page A propos
+        Todolist
     </h1>
 </template>

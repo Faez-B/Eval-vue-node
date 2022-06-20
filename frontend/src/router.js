@@ -3,7 +3,7 @@ import LoginVue from "@/components/Login.vue";
 import AccueilComponent from "@/components/Accueil.vue";
 import RegisterComponent from "@/components/Register.vue";
 import A_Propos from "@/components/A_Propos.vue";
-import Todolist from "@/components/Todolist.vue";
+import Todolist from "@/components/Liste.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -36,7 +36,7 @@ const router = createRouter({
             path: "/todolist",
             name: "todolist",
             component: Todolist
-        },
+        }
     ]
 })
 

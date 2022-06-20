@@ -22,9 +22,11 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           
-          <li class="nav-item active"><RouterLink class="nav-link" :to="{name:'accueil'}">Accueil</RouterLink></li>
+          <li v-if="user" class="nav-item active"><RouterLink class="nav-link" :to="{name:'accueil'}">Accueil</RouterLink></li>
           <li class="nav-item"><RouterLink class="nav-link" :to="{name:'apropos'}">À propos</RouterLink></li>
-          <li class="nav-item"><RouterLink class="nav-link" :to="{name:'todolist'}">Todolist</RouterLink></li>
+          <li v-if="user" class="nav-item"><RouterLink class="nav-link" :to="{name:'todolist'}">Todolist</RouterLink></li>
+          <!-- <li class="nav-item"><RouterLink class="nav-link" :to="{name:'todolist'}">Todolist</RouterLink></li> -->
+          <li class="nav-item"><RouterLink class="nav-link" :to="{name:'auHasard'}">Au Hasard</RouterLink></li>
 
         </ul>
 

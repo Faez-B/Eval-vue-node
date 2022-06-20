@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt  = require('jsonwebtoken');
-const cors = require('cors')
+const cors = require('cors');
+const { resolve } = require("path");
 
 const app = express();
 
@@ -189,7 +190,7 @@ app.get("/getAll/:userId", async (req, res) => {
             });
         })
     ;
-    
+
     res.status(200).send(todosUser);
 })
 
@@ -252,6 +253,28 @@ app.delete("/deleteOne/:id", async (req, res) => {
         })
     ;
     
+})
+
+app.get("/random", async (req, res) => {
+    let random = null;
+    if ( !token ) {
+        // random = Math.floor(Math.random());
+
+        // const todo = await Todo.findById(payload.id).exec()
+        //     .then( (data) => {
+        //         res.status(200).send(data);
+        //     })
+        //     .catch( (err) => {
+        //         res.status(404).send("Todo non trouvé");
+        //     })
+        // ;
+    }
+
+    else{
+        // res.status(200).send("OK");
+    }
+
+    res.send("default");
 })
 
 if (process.env.NODE_ENV !== 'test') 

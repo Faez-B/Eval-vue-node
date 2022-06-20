@@ -1,10 +1,26 @@
 <script setup>
     import {ref} from 'vue';
 
+    import axios from 'axios';
+
     const name = ref("");
     const email = ref("");
     const mdp = ref("");
-    const rememberMe = ref(false);
+
+    const token = ref("");
+
+    function onSubmit() {
+        if (email.value && mdp.value) {
+            axios.post("http://localhost:8000/signin", {
+                email: email.value,
+                password: mdp.value
+            })
+            .then((res) => {
+                token.value = res.data;
+                localStorage.setItem("token", token.value);
+            })
+        }
+    }
 
 </script>
 
@@ -23,11 +39,6 @@
         <div class="form-group">
             <label for="email">Mot de passe</label>
             <input type="password" class="form-control" id="email" placeholder="Mot de passe" v-model="mdp">
-        </div>
-
-        <div class="form-group my-2">
-            <input type="checkbox" name="rememberMe" id="rememberMe" class="mx-1" v-model="rememberMe">
-            <label for="rememberMe">Se souvenir de moi</label>
         </div>
         
         <div class="mt-2">

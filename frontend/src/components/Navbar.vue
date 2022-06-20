@@ -1,5 +1,15 @@
 <script setup>
+  import {ref} from "vue";
 
+  const token = ref("");
+
+  if (localStorage.getItem("token")) {
+    token.value = localStorage.getItem("token");
+  }
+
+  function logout() {
+    localStorage.removeItem("token");
+  }
 </script>
 
 <template>
@@ -17,12 +27,16 @@
       </div>
 
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item mx-2">
+        <li class="nav-item mx-2" v-if="!token">
           <RouterLink class="nav-link btn btn-success" :to="{name:'connexion'}">Connexion</RouterLink>
         </li>
 
-        <li class="nav-item mx-2">
+        <li class="nav-item mx-2" v-if="!token">
           <RouterLink class="nav-link btn btn-primary" :to="{name:'inscription'}">Inscription</RouterLink>
+        </li>
+
+        <li class="nav-item mx-2" v-if="token">
+          <RouterLink class="nav-link btn btn-danger" :to="{name:'accueil'}" @click="logout()">Déconnexion</RouterLink>
         </li>
       </ul>
     </nav>

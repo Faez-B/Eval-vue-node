@@ -16,11 +16,6 @@
             .then(() => {
                 console.log("Compte créé");
             })
-
-            const userConnect = ref({
-                name: name.value,
-                email: email.value,
-            })
         }
     }
 </script>

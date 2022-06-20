@@ -26,7 +26,7 @@
 
     function onSubmit() {
         if (nom.value) {
-            console.log(userId.value);
+            // console.log(userId.value);
             axios.post("http://localhost:8000/addOne", {  name: nom.value, userId : userId.value })
             .then( (res) => {
                 // console.log(res);
@@ -45,6 +45,7 @@
                     }]
                 }
                 nom.value = "";
+                localStorage.removeItem("nom");
             })
         }
     }
@@ -60,7 +61,19 @@
     }
 
     function onDelete(id) {
+        if (id) {
+            axios.delete(`http://localhost:8000/deleteOne/${id}`)
+                .then( (res) => {
+                    console.log(res.data);
 
+                    (objects.value).forEach((element, index) => {
+                        if(element._id == id) {
+                            (objects.value).splice(index, 1); 
+                        }
+                    });
+                })
+            ;
+        }
     }
 </script>
 

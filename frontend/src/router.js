@@ -60,6 +60,12 @@ const router = createRouter({
             path: "/au-hasard",
             name: "auHasard",
             component: Au_Hasard
+        },
+
+        {
+            path: "/detailTodo/:id",
+            name: "detailTodo",
+            component: Au_Hasard
         }
     ]
 })

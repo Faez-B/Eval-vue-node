@@ -1,9 +1,28 @@
 <script setup>
     import {ref} from 'vue';
 
+    import axios from 'axios';
+
     const name = ref("");
     const email = ref("");
     const mdp = ref("");
+
+    function onSubmit() {
+        if (email.value && mdp.value) {
+            axios.post("http://localhost:8000/signup", {
+                email: email.value,
+                password: mdp.value
+            })
+            .then(() => {
+                console.log("Compte créé");
+            })
+
+            const userConnect = ref({
+                name: name.value,
+                email: email.value,
+            })
+        }
+    }
 </script>
 
 <template>
@@ -25,7 +44,7 @@
         </div>
         
         <div class="mt-2">
-            <button type="submit" class="btn btn-success">Connexion</button>
+            <button type="submit" class="btn btn-success">Inscription</button>
         </div>
     </form>
 </template>

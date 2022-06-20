@@ -33,13 +33,13 @@ let _id = 1;
     // Todo
     const todoSchema = new mongoose.Schema({
         _id : Number,
-        name : String
-        // userId : Number
+        name : String,
+        userId : Number
     });
 
     const joiTodoSchema = Joi.object({
-        name : Joi.string().min(2).max(255).required()
-        // userId : Joi.number().required()
+        name : Joi.string().min(2).max(255).required(),
+        userId : Joi.number().required()
     });
 
 // Tables
@@ -175,10 +175,22 @@ app.get('/signout', (req, res) => {
 
 
 // Logique Todo
-app.get("/getAll", async (req, res) => {
-    const todos = await Todo.find();
+app.get("/getAll/:userId", async (req, res) => {
+    const payload = req.params;
+    
+    const todosUser = [];
 
-    res.status(200).send(todos);
+    const todos = await Todo.find().exec()
+        .then( (data) => {
+            data.forEach(element => {
+                if (element.userId == payload.userId) {
+                    todosUser.push(element);
+                }
+            });
+        })
+    ;
+    
+    res.status(200).send(todosUser);
 })
 
 app.get("/getOne/:id", async (req, res) => {
@@ -207,8 +219,8 @@ app.post("/addOne", async (req, res) => {
         let id = _id++;
         const todo = new Todo({
             ...payload, 
-            _id : id
-            // userId: payload.userId
+            _id : id, 
+            userId: parseInt(payload.userId)
         });
         await todo.save();
         res.status(201).send({payload, id : _id});

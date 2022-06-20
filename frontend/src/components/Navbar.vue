@@ -1,14 +1,18 @@
 <script setup>
   import {ref} from "vue";
 
+  import {useUserStore} from "@/services/userStore";
+
   const token = ref("");
 
   if (localStorage.getItem("token")) {
     token.value = localStorage.getItem("token");
   }
 
+  const { deconnexion } = useUserStore();
+
   function logout() {
-    localStorage.removeItem("token");
+    deconnexion();
   }
 </script>
 

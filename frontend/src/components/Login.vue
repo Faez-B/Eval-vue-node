@@ -1,7 +1,9 @@
 <script setup>
     import {ref} from 'vue';
 
-    import axios from 'axios';
+    // import axios from 'axios';
+
+    import {useUserStore} from "@/services/userStore";
 
     const name = ref("");
     const email = ref("");
@@ -9,16 +11,14 @@
 
     const token = ref("");
 
+    const { connexion } = useUserStore();
+
     function onSubmit() {
         if (email.value && mdp.value) {
-            axios.post("http://localhost:8000/signin", {
+            connexion({
                 email: email.value,
-                password: mdp.value
-            })
-            .then((res) => {
-                token.value = res.data;
-                localStorage.setItem("token", token.value);
-            })
+                mdp: mdp.value
+            });
         }
     }
 

@@ -8,14 +8,14 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           
-          <li class="nav-item active"><RouterLink class="nav-link" to="/">Accueil</RouterLink></li>
+          <li class="nav-item active"><RouterLink class="nav-link" :to="{name:'accueil'}">Accueil</RouterLink></li>
 
         </ul>
 
       </div>
 
       <ul class="navbar-nav mr-auto">
-        <li v-if="!user" class="nav-item">
+        <li class="nav-item">
           <RouterLink class="nav-link btn btn-success" :to="{name:'connexion'}">Connexion</RouterLink>
         </li>
       </ul>
